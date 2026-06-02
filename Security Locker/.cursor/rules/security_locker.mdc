@@ -1,0 +1,27 @@
+# Описание проекта
+Язык программирования (сервер): Python.
+Фреймворк: Flask.
+Клиент: HTML/Jinja2, CSS, JS.
+База данных: PostgreSQL.
+
+# Правила кодинга
+- Пиши чистый, модульный код с типами.
+- Всегда следуй принципам DRY и KISS.
+- Перед внесением изменений изучи существующие компоненты.
+- Не создавай новые файлы, если задачу можно решить изменением старых
+- Не смешивай роли в рамках архитектуры MVC
+
+# Database Entities
+- User 
+- Module 
+- Lesson 
+- Question 
+- Answer 
+- Progress 
+- Achievement
+
+# Распределение ролей
+- 
+
+# User Flow
+Login → Dashboard → Choose Module → Study the material → Pass Quiz → Get Score → Progress Updated

@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: ./backend/demo
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/historical_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      #HTTPS (раскомментировать при использовании профиля https):
+      #SPRING_PROFILES_ACTIVE: https
+      #SERVER_SSL_KEY_STORE_PASSWORD: corpsegrinder_1970
+      # Либо смонтировать keystore с хоста:
+      #SERVER_SSL_KEY_STORE: file:/app/keystore/keystore.p12
+    # volumes для HTTPS (если keystore не в образе):
+    #volumes:
+    #  - ./backend/demo/keystore:/app/keystore:ro
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: historical_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql

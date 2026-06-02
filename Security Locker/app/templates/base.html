@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Security Locker Dashboard{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="brand-icon">S</span>
+                <h1 class="brand-title">Security Locker</h1>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('dashboard') }}" class="nav-item{% if active_nav == 'dashboard' %} active{% endif %}">Главная</a>
+                <a href="{{ url_for('admin_panel') }}" class="nav-item{% if active_nav == 'admin' %} active{% endif %}">Админ-панель</a>
+                <a href="{{ url_for('logout') }}" class="nav-item">Выйти</a>
+            </nav>
+        </aside>
+
+        <main class="content-area">
+            <header class="topbar">
+                {% block page_header %}{% endblock %}
+                <div class="user-chip">
+                    <div class="avatar">K</div>
+                    <div>
+                        <strong>{{ user.email if user else "Guest" }}</strong>
+                        <small>Пользователь</small>
+                    </div>
+                </div>
+            </header>
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".bar i[data-width]").forEach(function (el) {
+                var v = el.getAttribute("data-width");
+                if (v === null) return;
+                el.style.width = v + "%";
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base_auth.html" %}
+
+{% block title %}Регистрация | Security Locker{% endblock %}
+
+{% block content %}
+<main class="auth-wrapper">
+    <section class="auth-card">
+        <h1 class="auth-title">Регистрация</h1>
+
+        {% if error %}
+        <p class="auth-error">{{ error }}</p>
+        {% endif %}
+
+        <form class="auth-form" action="{{ url_for('registration') }}" method="post">
+            <input
+                type="email"
+                name="email"
+                placeholder="Адрес почты"
+                autocomplete="email"
+                required
+            >
+            <input
+                type="password"
+                name="password"
+                placeholder="Пароль"
+                autocomplete="new-password"
+                required
+            >
+            <button type="submit" class="auth-submit">Создать аккаунт</button>
+        </form>
+
+        <p class="auth-footer">
+            Уже есть аккаунт?
+            <a href="{{ url_for('login') }}">Войти</a>
+        </p>
+    </section>
+</main>
+{% endblock %}

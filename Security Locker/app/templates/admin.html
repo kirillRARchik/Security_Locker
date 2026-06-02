@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Панель администратора | Security Locker{% endblock %}
+
+{% block page_header %}
+<div>
+    <h2>Панель администратора</h2>
+    <p>Управление пользователями и курсами обучающей платформы</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="admin-panel">
+    <nav class="admin-tabs" role="tablist" aria-label="Разделы админ-панели">
+        <button
+            type="button"
+            class="admin-tab active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-users"
+            id="tab-users"
+            data-tab="users"
+        >
+            Управление пользователями
+        </button>
+        <button
+            type="button"
+            class="admin-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-courses"
+            id="tab-courses"
+            data-tab="courses"
+        >
+            Управление курсами
+        </button>
+    </nav>
+
+    <div class="admin-table-card">
+        <div class="admin-table-panel active" id="panel-users" role="tabpanel" aria-labelledby="tab-users">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th class="col-check"><input type="checkbox" aria-label="Выбрать всех пользователей"></th>
+                        <th>ID</th>
+                        <th>Пользователь</th>
+                        <th>Email</th>
+                        <th>Дата регистрации</th>
+                        <th>Статус</th>
+                        <th>Прогресс</th>
+                        <th class="col-action">Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in users %}
+                    <tr>
+                        <td class="col-check"><input type="checkbox" aria-label="Выбрать {{ row.name }}"></td>
+                        <td class="col-id">U-{{ "%03d"|format(row.id) }}</td>
+                        <td>
+                            <div class="admin-user-cell">
+                                <span class="admin-avatar" aria-hidden="true">{{ row.initials }}</span>
+                                <span>{{ row.name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ row.email }}</td>
+                        <td>{{ row.registered_at }}</td>
+                        <td><span class="status-badge status-{{ row.status }}">{{ row.status_label }}</span></td>
+                        <td>{{ row.progress }}%</td>
+                        <td class="col-action">
+                            <button type="button" class="admin-menu-btn" aria-label="Действия для {{ row.name }}">⋮</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="admin-table-panel" id="panel-courses" role="tabpanel" aria-labelledby="tab-courses" hidden>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th class="col-check"><input type="checkbox" aria-label="Выбрать все курсы"></th>
+                        <th>ID</th>
+                        <th>Название курса</th>
+                        <th>Модуль</th>
+                        <th>Уроков</th>
+                        <th>Статус</th>
+                        <th>Обновлён</th>
+                        <th class="col-action">Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in courses %}
+                    <tr>
+                        <td class="col-check"><input type="checkbox" aria-label="Выбрать {{ row.title }}"></td>
+                        <td class="col-id">C-{{ "%03d"|format(row.id) }}</td>
+                        <td>{{ row.title }}</td>
+                        <td>{{ row.module }}</td>
+                        <td>{{ row.lessons_count }}</td>
+                        <td><span class="status-badge status-{{ row.status }}">{{ row.status_label }}</span></td>
+                        <td>{{ row.updated_at }}</td>
+                        <td class="col-action">
+                            <button type="button" class="admin-menu-btn" aria-label="Действия для {{ row.title }}">⋮</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var tabs = document.querySelectorAll(".admin-tab");
+        var panels = document.querySelectorAll(".admin-table-panel");
+
+        tabs.forEach(function (tab) {
+            tab.addEventListener("click", function () {
+                var target = tab.getAttribute("data-tab");
+
+                tabs.forEach(function (t) {
+                    t.classList.remove("active");
+                    t.setAttribute("aria-selected", "false");
+                });
+                tab.classList.add("active");
+                tab.setAttribute("aria-selected", "true");
+
+                panels.forEach(function (panel) {
+                    var isUsers = panel.id === "panel-users";
+                    var show = (target === "users" && isUsers) || (target === "courses" && !isUsers);
+                    panel.classList.toggle("active", show);
+                    panel.hidden = !show;
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

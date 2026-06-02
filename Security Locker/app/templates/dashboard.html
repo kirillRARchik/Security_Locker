@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Security Locker{% endblock %}
+
+{% block page_header %}
+<div>
+    <h2>Добрый день</h2>
+    <p>Здесь некоторая информация об обучении</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-grid">
+    <div class="panel card-panel">
+        <h3>Темы</h3>
+        <div class="credit-card">
+            <div class="card-brand">Пароли</div>
+            <div class="card-number">Создание и проверка надёжности</div>
+            <div class="card-meta">
+                <div>
+                    <span>Порядковый номер</span>
+                    <strong>1</strong>
+                </div>
+                <div>
+                    <span>Максимальные ОО</span>
+                    <strong>3</strong>
+                </div>
+            </div>
+        </div>
+        <div class="totals">
+            <div class="stat-item">
+                <label>Прогресс <span>{{ stats.progress_percent }}%</span></label>
+                <div class="bar"><i class="bar-fill" data-width="{{ stats.progress_percent_clamped }}"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel goals-panel">
+        <h3>Достижения</h3>
+        <div class="goals-list">
+            {% for a in achievements %}
+            <article>
+                <strong>${{ a.amount }}</strong>
+                <p>{{ a.label }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="panel transaction-panel">
+        <h3>История тестов</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Раздел</th>
+                    <th>Максимальные ОО</th>
+                    <th>Лучший результат</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in history %}
+                <tr>
+                    <td>{{ row.title }}</td>
+                    <td>{{ row.section }}</td>
+                    <td>{{ row.max_points }}</td>
+                    <td>{{ row.best_result }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel stats-panel">
+        <h3>Опыт</h3>
+        <div class="stat-item">
+            <label>Очки опыта <span>{{ stats.xp }}</span></label>
+            <div class="bar"><i class="bar-fill" data-width="{{ stats.xp_clamped }}"></i></div>
+        </div>
+        <div class="stat-item">
+            <label>Пройденные темы <span>{{ stats.topics_done }}</span></label>
+            <div class="bar"><i class="bar-fill" data-width="{{ stats.topics_done_clamped }}"></i></div>
+        </div>
+        <div class="stat-item">
+            <label>Пройденные разделы <span>{{ stats.sections_done }}</span></label>
+            <div class="bar"><i class="bar-fill" data-width="{{ stats.sections_done_clamped }}"></i></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

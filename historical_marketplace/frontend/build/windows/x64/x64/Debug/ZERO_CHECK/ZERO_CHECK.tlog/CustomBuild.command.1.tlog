@@ -1,0 +1,10 @@
+^C:\USERS\VYATK\ONEDRIVE\DESKTOP\HISTORICAL_MARKETPLACE\FRONTEND\HISTORICAL_MARKETPLACE\BUILD\WINDOWS\X64\CMAKEFILES\809021A2CF311B9948129D9B0FABD095\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/vyatk/OneDrive/Desktop/historical_marketplace/frontend/historical_marketplace/windows -BC:/Users/vyatk/OneDrive/Desktop/historical_marketplace/frontend/historical_marketplace/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/vyatk/OneDrive/Desktop/historical_marketplace/frontend/historical_marketplace/build/windows/x64/historical_marketplace.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
