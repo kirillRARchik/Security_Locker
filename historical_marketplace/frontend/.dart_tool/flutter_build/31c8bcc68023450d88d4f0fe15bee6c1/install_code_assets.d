@@ -1,1 +1,0 @@
- C:\\Users\\vyatk\\OneDrive\\Desktop\\historical_marketplace\\frontend\\historical_marketplace\\.dart_tool\\flutter_build\\31c8bcc68023450d88d4f0fe15bee6c1\\native_assets.json: 

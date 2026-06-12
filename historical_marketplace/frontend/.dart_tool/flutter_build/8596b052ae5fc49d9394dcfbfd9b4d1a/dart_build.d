@@ -1,1 +1,0 @@
- C:\\Users\\vyatk\\OneDrive\\Desktop\\historical_marketplace\\frontend\\historical_marketplace\\.dart_tool\\flutter_build\\8596b052ae5fc49d9394dcfbfd9b4d1a\\dart_build_result.json: 
