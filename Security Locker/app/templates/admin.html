@@ -41,7 +41,6 @@
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th class="col-check"><input type="checkbox" aria-label="Выбрать всех пользователей"></th>
                         <th>ID</th>
                         <th>Пользователь</th>
                         <th>Email</th>
@@ -54,7 +53,6 @@
                 <tbody>
                     {% for row in users %}
                     <tr>
-                        <td class="col-check"><input type="checkbox" aria-label="Выбрать {{ row.name }}"></td>
                         <td class="col-id">U-{{ "%03d"|format(row.id) }}</td>
                         <td>
                             <div class="admin-user-cell">
@@ -67,8 +65,29 @@
                         <td><span class="status-badge status-{{ row.status }}">{{ row.status_label }}</span></td>
                         <td>{{ row.progress }}%</td>
                         <td class="col-action">
-                            <button type="button" class="admin-menu-btn" aria-label="Действия для {{ row.name }}">⋮</button>
-                        </td>
+                            <div class="admin-actions">
+                                <button
+                                    type="button"
+                                    class="admin-menu-btn"
+                                    data-menu-toggle
+                                    aria-label="Действия для {{ row.name }}"
+                                >
+                                    ⋮
+                                </button>
+
+                                <div class="admin-dropdown">
+                                    <form
+                                        method="post"
+                                        action="{{ url_for('admin_delete_user', user_id=row.id) }}"
+                                        onsubmit="return confirm('Удалить пользователя {{ row.name }}?');"
+                                    >
+                                        <button type="submit" class="dropdown-danger">
+                                            Удалить пользователя
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>                       
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -79,7 +98,6 @@
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th class="col-check"><input type="checkbox" aria-label="Выбрать все курсы"></th>
                         <th>ID</th>
                         <th>Название курса</th>
                         <th>Модуль</th>
@@ -92,7 +110,6 @@
                 <tbody>
                     {% for row in courses %}
                     <tr>
-                        <td class="col-check"><input type="checkbox" aria-label="Выбрать {{ row.title }}"></td>
                         <td class="col-id">C-{{ "%03d"|format(row.id) }}</td>
                         <td>{{ row.title }}</td>
                         <td>{{ row.module }}</td>
@@ -137,5 +154,21 @@
             });
         });
     });
+</script>
+
+<script>
+document.addEventListener("click", (event) => {
+    const toggle = event.target.closest("[data-menu-toggle]");
+
+    document.querySelectorAll(".admin-actions.open").forEach((item) => {
+        if (!item.contains(event.target)) {
+            item.classList.remove("open");
+        }
+    });
+
+    if (toggle) {
+        toggle.closest(".admin-actions").classList.toggle("open");
+    }
+});
 </script>
 {% endblock %}

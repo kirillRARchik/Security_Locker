@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Tests | Security Locker{% endblock %}
+
+{% block page_header %}
+<div>
+    <h2>Tests</h2>
+    <p>{{ test.title }}</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="test-page">
+    <form method="post" action="{{ url_for('test_question_screen') }}" class="test-card">
+        <input type="hidden" name="test_id" value="{{ test.id }}">
+        <input type="hidden" name="question_index" value="{{ question.number - 1 }}">
+        <input type="hidden" name="question_id" value="{{ question.id }}">
+
+        <p class="test-counter">ВОПРОС {{ question.number }} / {{ question.total }}</p>
+        <h3>{{ question.text }}</h3>
+
+        <div class="answer-list">
+            {% for answer in question.answers %}
+            <label class="answer-option">
+                <input type="radio" name="answer_id" value="{{ answer.id }}" required>
+                <span class="answer-radio" aria-hidden="true"></span>
+                <span>{{ answer.text }}</span>
+            </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="test-next-button">
+            {% if question.number == question.total %}Завершить{% else %}Далее{% endif %}
+            <span aria-hidden="true">→</span>
+        </button>
+    </form>
+</section>
+{% endblock %}

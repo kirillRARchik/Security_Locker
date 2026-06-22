@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ lesson.title }} | Security Locker{% endblock %}
+
+{% block page_header %}
+<div class="lesson-page-header">
+    <h2>{{ lesson.title }}</h2>
+    <div class="lesson-actions" aria-label="Lesson tools">
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<article class="lesson-material">
+    <section class="lesson-section">
+       <div style="white-space: pre-line;">
+            {{ lesson.content }}
+        </div>
+    </section>
+{% endblock %}

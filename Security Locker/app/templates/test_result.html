@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Test Result | Security Locker{% endblock %}
+
+{% block page_header %}
+<div>
+    <h2>Результат теста</h2>
+    <p>{{ result.title }}</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="test-result-page">
+    <article class="result-card{% if result.passed %} is-passed{% else %} is-failed{% endif %}">
+        <p class="result-kicker">{{ result.course_title }}</p>
+        <h3>
+            {% if result.passed %}
+            Пороговый балл пройден
+            {% else %}
+            Пороговый балл не пройден
+            {% endif %}
+        </h3>
+
+        <div class="result-score">
+            <strong>{{ result.score }}</strong>
+            <span>/ {{ result.total }}</span>
+        </div>
+
+        <p class="result-description">
+            Пороговый балл: {{ result.passing_score }} правильных ответов.
+            {% if result.passed %}
+            Вы можете загрузить сертификат за этот курс.
+            {% else %}
+            Просмотрите материалы урока и пройдите тест снова.
+            {% endif %}
+        </p>
+
+        <div class="result-actions">
+            <a href="{{ url_for('tests') }}" class="result-secondary">Попробовать снова</a>
+            {% if result.passed %}
+            <a href="{{ url_for('download_certificate', history_id=result.history_id) }}" class="result-primary">Скачать сертификат</a>
+            {% endif %}
+        </div>
+    </article>
+</section>
+{% endblock %}

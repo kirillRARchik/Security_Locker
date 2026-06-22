@@ -27,12 +27,6 @@
                 </div>
             </div>
         </div>
-        <div class="totals">
-            <div class="stat-item">
-                <label>Прогресс <span>{{ stats.progress_percent }}%</span></label>
-                <div class="bar"><i class="bar-fill" data-width="{{ stats.progress_percent_clamped }}"></i></div>
-            </div>
-        </div>
     </div>
 
     <div class="panel goals-panel">
@@ -40,11 +34,14 @@
         <div class="goals-list">
             {% for a in achievements %}
             <article>
-                <strong>${{ a.amount }}</strong>
-                <p>{{ a.label }}</p>
+                <div class="achievement-mini">
+                    <span class="achievement-icon">{{ a.icon }}</span>
+                    <span class="achievement-title">{{ a.label }}</span>
+                </div>
             </article>
             {% endfor %}
         </div>
+        <a href="{{ url_for('achievements_page') }}" class="view-all-link">Показать все →</a>
     </div>
 
     <div class="panel transaction-panel">
@@ -69,22 +66,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-
-    <div class="panel stats-panel">
-        <h3>Опыт</h3>
-        <div class="stat-item">
-            <label>Очки опыта <span>{{ stats.xp }}</span></label>
-            <div class="bar"><i class="bar-fill" data-width="{{ stats.xp_clamped }}"></i></div>
-        </div>
-        <div class="stat-item">
-            <label>Пройденные темы <span>{{ stats.topics_done }}</span></label>
-            <div class="bar"><i class="bar-fill" data-width="{{ stats.topics_done_clamped }}"></i></div>
-        </div>
-        <div class="stat-item">
-            <label>Пройденные разделы <span>{{ stats.sections_done }}</span></label>
-            <div class="bar"><i class="bar-fill" data-width="{{ stats.sections_done_clamped }}"></i></div>
-        </div>
     </div>
 </section>
 {% endblock %}

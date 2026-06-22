@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Достижения | Security Locker{% endblock %}
+
+{% block page_header %}
+<div>
+    <h2>Достижения</h2>
+    <p>Ваши награды и достижения</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="achievements-page">
+    <div class="achievements-grid">
+        {% for achievement in achievements %}
+        <article class="achievement-card {% if achievement.unlocked_at %}unlocked{% else %}locked{% endif %}">
+            <div class="achievement-icon">{{ achievement.icon }}</div>
+            <h3>{{ achievement.label }}</h3>
+            <p class="achievement-description">{{ achievement.description }}</p>
+
+            {% if achievement.unlocked_at %}
+            <div class="achievement-status unlocked-badge">
+                <span>✓ Получено</span>
+            </div>
+            {% else %}
+            <div class="achievement-status locked-badge">
+                {% set progress = achievement_progress.get(achievement.achievement_key) %}
+                {% if progress %}
+                <div class="progress-text">{{ progress.text }}</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ (progress.current / progress.total * 100)|int }}%"></div>
+                </div>
+                {% else %}
+                <span>Заблокировано</span>
+                {% endif %}
+            </div>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

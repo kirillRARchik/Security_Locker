@@ -20,6 +20,9 @@
 
             <nav class="sidebar-nav">
                 <a href="{{ url_for('dashboard') }}" class="nav-item{% if active_nav == 'dashboard' %} active{% endif %}">Главная</a>
+                <a href="{{ url_for('modules') }}" class="nav-item{% if active_nav == 'modules' %} active{% endif %}">Модули</a>
+                <a href="{{ url_for('tests') }}" class="nav-item{% if active_nav == 'tests' %} active{% endif %}">Тесты</a>
+                <a href="{{ url_for('achievements_page') }}" class="nav-item{% if active_nav == 'achievements' %} active{% endif %}">Достижения</a>
                 <a href="{{ url_for('admin_panel') }}" class="nav-item{% if active_nav == 'admin' %} active{% endif %}">Админ-панель</a>
                 <a href="{{ url_for('logout') }}" class="nav-item">Выйти</a>
             </nav>
