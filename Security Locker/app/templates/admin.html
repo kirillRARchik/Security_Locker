@@ -117,7 +117,28 @@
                         <td><span class="status-badge status-{{ row.status }}">{{ row.status_label }}</span></td>
                         <td>{{ row.updated_at }}</td>
                         <td class="col-action">
-                            <button type="button" class="admin-menu-btn" aria-label="Действия для {{ row.title }}">⋮</button>
+                            <div class="admin-actions">
+                                <button
+                                    type="button"
+                                    class="admin-menu-btn"
+                                    data-menu-toggle
+                                    aria-label="Действия для {{ row.title }}"
+                                >
+                                    ⋮
+                                </button>
+
+                                <div class="admin-dropdown">
+                                    <form
+                                        method="post"
+                                        action="{{ url_for('admin_delete_course', course_id=row.id) }}"
+                                        onsubmit="return confirm('Удалить курс «{{ row.title }}»?');"
+                                    >
+                                        <button type="submit" class="dropdown-danger">
+                                            Удалить курс
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     {% endfor %}

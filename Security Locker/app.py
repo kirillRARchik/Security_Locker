@@ -531,6 +531,44 @@ def admin_delete_user(user_id: int):
     return redirect(url_for("admin_panel"))
 
 
+@app.post("/admin/courses/<int:course_id>/delete")
+def admin_delete_course(course_id: int):
+    current_user = _get_current_user()
+
+    if not current_user or not current_user.is_admin:
+        abort(403)
+
+    with _connect_db() as conn:
+        course = conn.execute(
+            """
+            SELECT id, title
+            FROM courses
+            WHERE id = ?
+            """,
+            (course_id,),
+        ).fetchone()
+
+        if not course:
+            abort(404)
+
+        conn.execute(
+            """
+            DELETE FROM courses
+            WHERE id = ? ON DELETE CASCADE
+            """,
+            (course_id,),
+        )
+
+        conn.commit()
+
+    flash(
+        f"Курс «{course['title']}» успешно удалён.",
+        "success",
+    )
+
+    return redirect(url_for("admin_panel"))
+
+
 @app.route("/tests")
 def tests():
     user = _get_current_user()
